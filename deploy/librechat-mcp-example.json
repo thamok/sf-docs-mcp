@@ -1,0 +1,8 @@
+{
+  "name": "salesforce-docs",
+  "type": "streamable_http",
+  "url": "https://your-host.example.com/mcp",
+  "headers": {
+    "Authorization": "Bearer REPLACE_WITH_TOKEN"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "generated_at": "2026-04-03T00:00:00.000Z",
+  "documents": [
+    {
+      "id": "chunk-tooling-auth-overview",
+      "doc_id": "doc-tooling-api-overview",
+      "title": "Tooling API Overview",
+      "url": "https://developer.salesforce.com/docs/atlas.en-us.api_tooling.meta/api_tooling/intro_tooling_api.htm",
+      "product_family": "api",
+      "section_path": ["Tooling API", "Overview"],
+      "headings": ["Tooling API Overview"],
+      "source_type": "html",
+      "text": "The Tooling API exposes metadata used by developer tooling. Authenticate with OAuth using your org login endpoint, then send REST requests to /services/data/vXX.X/tooling/. Use OAuth scopes that permit API access and include an Authorization Bearer token on each request.",
+      "last_crawled_at": "2026-04-02T11:00:00.000Z"
+    },
+    {
+      "id": "chunk-tooling-auth-session",
+      "doc_id": "doc-tooling-api-overview",
+      "title": "Tooling API Authentication",
+      "url": "https://developer.salesforce.com/docs/atlas.en-us.api_tooling.meta/api_tooling/intro_rest_auth.htm",
+      "product_family": "api",
+      "section_path": ["Tooling API", "Authentication"],
+      "headings": ["Authentication", "OAuth 2.0"],
+      "source_type": "html",
+      "text": "Use OAuth 2.0 to obtain an access token. Supported flows include web server, user-agent, JWT bearer, and refresh token. Include Authorization: Bearer <token> and use the instance URL returned by login.",
+      "last_crawled_at": "2026-04-02T11:00:00.000Z"
+    },
+    {
+      "id": "chunk-soql-relationship-queries",
+      "doc_id": "doc-soql-guide",
+      "title": "SOQL Relationship Queries",
+      "url": "https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_relationships.htm",
+      "product_family": "apex",
+      "section_path": ["SOQL and SOSL", "SOQL", "Relationship Queries"],
+      "headings": ["Relationship Queries"],
+      "source_type": "html",
+      "text": "Relationship queries traverse parent-to-child and child-to-parent records. Use dot notation for parent fields and nested SELECT for child relationships.",
+      "last_crawled_at": "2026-04-01T12:00:00.000Z"
+    },
+    {
+      "id": "chunk-sf-deploy-start",
+      "doc_id": "doc-cli-deploy",
+      "title": "sf project deploy start",
+      "url": "https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference_project_commands_unified.htm",
+      "product_family": "cli",
+      "section_path": ["Salesforce CLI", "project", "deploy"],
+      "headings": ["sf project deploy start"],
+      "source_type": "html",
+      "text": "Use sf project deploy start to deploy metadata from your local project to an org. Common flags include --target-org, --manifest, and --test-level.",
+      "last_crawled_at": "2026-04-02T08:20:00.000Z"
+    },
+    {
+      "id": "chunk-contentversion-reference",
+      "doc_id": "doc-object-reference-contentversion",
+      "title": "ContentVersion Object",
+      "url": "https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/object_reference/sforce_api_objects_contentversion.htm",
+      "product_family": "api",
+      "section_path": ["Object Reference", "ContentVersion"],
+      "headings": ["ContentVersion"],
+      "source_type": "html",
+      "text": "ContentVersion represents a specific version of a Salesforce file. Key fields include ContentDocumentId, VersionData, PathOnClient, and IsLatest.",
+      "last_crawled_at": "2026-04-02T09:00:00.000Z"
+    }
+  ],
+  "failed_pages": 0
+}

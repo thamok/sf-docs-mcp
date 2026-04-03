@@ -1,0 +1,20 @@
+[Unit]
+Description=Salesforce Docs MCP Server
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/sf-docs-mcp
+Environment=NODE_ENV=production
+Environment=HOST=0.0.0.0
+Environment=PORT=3000
+Environment=AUTH_TOKEN=change-me
+Environment=INDEX_PATH=/opt/sf-docs-mcp/data/seed-index.json
+ExecStart=/usr/bin/node /opt/sf-docs-mcp/apps/server/dist/apps/server/src/index.js
+Restart=always
+RestartSec=3
+User=pi
+Group=pi
+
+[Install]
+WantedBy=multi-user.target

@@ -5,7 +5,7 @@ import {
   statsOutputSchema,
   validateStatsInput,
   validateStatsOutput,
-} from '../../../../../packages/shared/schemas/stats';
+} from '../../../../../packages/shared/schemas/stats.js';
 
 export interface StatsBackend {
   getStats(input: StatsInput): Promise<StatsOutput>;

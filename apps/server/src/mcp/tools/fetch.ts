@@ -5,7 +5,7 @@ import {
   fetchOutputSchema,
   validateFetchInput,
   validateFetchOutput,
-} from '../../../../../packages/shared/schemas/fetch';
+} from '../../../../../packages/shared/schemas/fetch.js';
 
 export interface FetchBackend {
   fetchById(input: FetchInput): Promise<FetchOutput>;

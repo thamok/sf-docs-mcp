@@ -13,6 +13,29 @@ export const createApp = () => {
   app.use(createHttpLogger(config.logLevel));
 
   app.use((req: Request, res: Response, next: NextFunction) => {
+    const origin = req.header('origin');
+
+    if (!origin) {
+      return next();
+    }
+
+    if (config.corsAllowlist.length > 0 && !config.corsAllowlist.includes(origin)) {
+      return res.status(403).json({ error: 'Origin not allowed' });
+    }
+
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Vary', 'Origin');
+    res.header('Access-Control-Allow-Headers', 'Authorization, Content-Type');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+
+    if (req.method === 'OPTIONS') {
+      return res.status(204).send();
+    }
+
+    return next();
+  });
+
+  app.use((req: Request, res: Response, next: NextFunction) => {
     if (!config.authToken) {
       return next();
     }
@@ -32,7 +55,7 @@ export const createApp = () => {
   const handleMcp = async (req: Request, res: Response) => {
     const server = buildMcpServer(config);
     const transport = new StreamableHTTPServerTransport({
-      sessionIdGenerator: undefined
+      sessionIdGenerator: undefined,
     });
 
     try {
@@ -40,14 +63,18 @@ export const createApp = () => {
       await transport.handleRequest(req, res, req.body);
     } catch (error) {
       logger.error({ err: error }, 'MCP request failed');
+
       if (!res.headersSent) {
-        res.status(500).json({
+        const message = error instanceof Error ? error.message : 'Internal server error';
+        const code = message.includes('Unknown document id') ? -32004 : -32603;
+
+        res.status(code === -32004 ? 404 : 500).json({
           jsonrpc: '2.0',
           error: {
-            code: -32603,
-            message: 'Internal server error'
+            code,
+            message,
           },
-          id: null
+          id: null,
         });
       }
     } finally {

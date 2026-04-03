@@ -2,9 +2,9 @@ export interface AppConfig {
   host: string;
   port: number;
   authToken?: string;
-  searchServiceUrl: string;
-  fetchServiceUrl: string;
   logLevel: string;
+  indexPath: string;
+  corsAllowlist: string[];
 }
 
 const getEnv = (key: string): string | undefined => {
@@ -20,12 +20,17 @@ export const loadConfig = (): AppConfig => {
     throw new Error(`Invalid PORT: ${portValue}`);
   }
 
+  const corsAllowlist = (getEnv('CORS_ALLOWLIST') ?? '')
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+
   return {
-    host: getEnv('HOST') ?? '127.0.0.1',
+    host: getEnv('HOST') ?? '0.0.0.0',
     port,
     authToken: getEnv('AUTH_TOKEN'),
-    searchServiceUrl: getEnv('SEARCH_SERVICE_URL') ?? 'http://localhost:4001/search',
-    fetchServiceUrl: getEnv('FETCH_SERVICE_URL') ?? 'http://localhost:4002/fetch',
-    logLevel: getEnv('LOG_LEVEL') ?? 'info'
+    logLevel: getEnv('LOG_LEVEL') ?? 'info',
+    indexPath: getEnv('INDEX_PATH') ?? 'data/seed-index.json',
+    corsAllowlist,
   };
 };

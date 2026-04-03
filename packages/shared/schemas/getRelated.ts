@@ -52,7 +52,7 @@ export function validateGetRelatedInput(input: unknown): GetRelatedInput {
   if (input.top_k !== undefined) {
     assertNumberInRange(input.top_k, 'top_k', 1, 20);
   }
-  return input as GetRelatedInput;
+  return input as unknown as GetRelatedInput;
 }
 
 export function validateGetRelatedOutput(output: unknown): GetRelatedOutput {
@@ -69,7 +69,7 @@ export function validateGetRelatedOutput(output: unknown): GetRelatedOutput {
       assertString(item.url, `related[${idx}].url`);
       assertNumberInRange(item.score, `related[${idx}].score`, 0, 1);
 
-      return { ...item, url: canonicalizeUrl(item.url) };
+      return { ...(item as any), url: canonicalizeUrl(item.url) };
     }),
   };
 }
