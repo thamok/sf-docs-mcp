@@ -5,7 +5,7 @@ import {
   getRelatedOutputSchema,
   validateGetRelatedInput,
   validateGetRelatedOutput,
-} from '../../../../../packages/shared/schemas/getRelated';
+} from '../../../../../packages/shared/schemas/getRelated.js';
 
 export interface GetRelatedBackend {
   getRelated(input: GetRelatedInput): Promise<GetRelatedOutput>;

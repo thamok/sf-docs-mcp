@@ -1,55 +1,92 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
-import { AppConfig } from './config.js';
+import type { AppConfig } from './config.js';
+import { searchTool } from './mcp/tools/search.js';
+import { fetchTool } from './mcp/tools/fetch.js';
+import { getRelatedTool } from './mcp/tools/getRelated.js';
+import { statsTool } from './mcp/tools/stats.js';
+import { IndexRepository } from './services/indexRepository.js';
 
 export const buildMcpServer = (config: AppConfig) => {
+  const repo = new IndexRepository(config.indexPath);
   const server = new McpServer(
     {
       name: 'sf-docs-mcp-server',
-      version: '0.1.0'
+      version: '1.0.0',
     },
     {
       capabilities: {
         logging: {},
-        tools: {}
-      }
-    }
+        tools: {},
+      },
+    },
   );
 
   server.registerTool(
-    'search',
+    searchTool.name,
     {
-      description: 'Search documents from the configured search service.',
+      description: searchTool.description,
       inputSchema: {
-        query: z.string().min(1)
-      }
+        query: z.string().min(1),
+        top_k: z.number().int().min(1).max(20).optional(),
+        product_family: z.string().min(1).optional(),
+        url_prefix: z.string().min(1).optional(),
+        include_snippets: z.boolean().optional(),
+      },
     },
-    async ({ query }) => ({
-      content: [
-        {
-          type: 'text',
-          text: `search stub: query="${query}" target="${config.searchServiceUrl}"`
-        }
-      ]
-    })
+    async (args: unknown) => {
+      const output = await searchTool.run(args, repo);
+      return {
+        content: [{ type: 'text', text: JSON.stringify(output) }],
+        structuredContent: output as unknown as Record<string, unknown>,
+      };
+    },
   );
 
   server.registerTool(
-    'fetch',
+    fetchTool.name,
     {
-      description: 'Fetch document content from the configured fetch service.',
-      inputSchema: {
-        url: z.string().url()
-      }
+      description: fetchTool.description,
+      inputSchema: { id: z.string().min(1) },
     },
-    async ({ url }) => ({
-      content: [
-        {
-          type: 'text',
-          text: `fetch stub: url="${url}" backend="${config.fetchServiceUrl}"`
-        }
-      ]
-    })
+    async (args: unknown) => {
+      const output = await fetchTool.run(args, repo);
+      return {
+        content: [{ type: 'text', text: JSON.stringify(output) }],
+        structuredContent: output as unknown as Record<string, unknown>,
+      };
+    },
+  );
+
+  server.registerTool(
+    getRelatedTool.name,
+    {
+      description: getRelatedTool.description,
+      inputSchema: { id: z.string().min(1), top_k: z.number().int().min(1).max(20).optional() },
+    },
+    async (args: unknown) => {
+      const output = await getRelatedTool.run(args, repo);
+      return {
+        content: [{ type: 'text', text: JSON.stringify(output) }],
+        structuredContent: output as unknown as Record<string, unknown>,
+      };
+    },
+  );
+
+  server.registerTool(
+    statsTool.name,
+    {
+      description: statsTool.description,
+      inputSchema: { product_family: z.string().min(1).optional() },
+    },
+    async (args: unknown) => {
+      const output = await statsTool.run(args, repo);
+
+      return {
+        content: [{ type: 'text', text: JSON.stringify(output) }],
+        structuredContent: output as unknown as Record<string, unknown>,
+      };
+    },
   );
 
   return server;

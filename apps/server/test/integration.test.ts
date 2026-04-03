@@ -22,7 +22,7 @@ describe('MCP server integration', () => {
         jsonrpc: '2.0',
         id: 1,
         method: 'tools/list',
-        params: {}
+        params: {},
       });
 
     const payload = parseSseMessage(response.text);
@@ -30,11 +30,11 @@ describe('MCP server integration', () => {
     expect(response.status).toBe(200);
     expect(payload.jsonrpc).toBe('2.0');
     expect(payload.result.tools.map((tool: { name: string }) => tool.name)).toEqual(
-      expect.arrayContaining(['search', 'fetch'])
+      expect.arrayContaining(['search', 'fetch', 'getRelated', 'stats']),
     );
   });
 
-  it('accepts MCP requests and returns MCP-compliant responses', async () => {
+  it('search returns structured MCP data', async () => {
     const { app } = createApp();
 
     const response = await request(app)
@@ -47,9 +47,10 @@ describe('MCP server integration', () => {
         params: {
           name: 'search',
           arguments: {
-            query: 'docs'
-          }
-        }
+            query: 'Tooling API authenticate',
+            top_k: 2,
+          },
+        },
       });
 
     const payload = parseSseMessage(response.text);
@@ -57,8 +58,9 @@ describe('MCP server integration', () => {
     expect(response.status).toBe(200);
     expect(payload).toMatchObject({
       jsonrpc: '2.0',
-      id: 'call-1'
+      id: 'call-1',
     });
-    expect(payload.result.content[0].text).toContain('search stub');
+    expect(payload.result.structuredContent.results.length).toBeGreaterThan(0);
+    expect(payload.result.structuredContent.results[0].url).toContain('developer.salesforce.com');
   });
 });

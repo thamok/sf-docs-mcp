@@ -5,7 +5,7 @@ import {
   searchOutputSchema,
   validateSearchInput,
   validateSearchOutput,
-} from '../../../../../packages/shared/schemas/search';
+} from '../../../../../packages/shared/schemas/search.js';
 
 export interface SearchBackend {
   searchDocs(input: SearchInput): Promise<SearchOutput>;

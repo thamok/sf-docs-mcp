@@ -1,0 +1,6 @@
+[mcp_servers.salesforce_docs]
+transport = "streamable_http"
+url = "https://your-host.example.com/mcp"
+
+[mcp_servers.salesforce_docs.headers]
+Authorization = "Bearer ${SF_DOCS_MCP_AUTH_TOKEN}"
