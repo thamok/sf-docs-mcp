@@ -11,3 +11,8 @@ env_var = "SF_DOCS_MCP_TOKEN"
 
 [headers]
 x_client = "codex"
+[remote_mcp.salesforce_docs]
+transport = "http"
+url = "https://mcp.example.com"
+headers = { Authorization = "Bearer ${MCP_BEARER_TOKEN}" }
+timeout_seconds = 30
