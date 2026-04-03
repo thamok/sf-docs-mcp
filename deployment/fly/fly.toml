@@ -1,0 +1,24 @@
+app = "sf-docs-mcp"
+primary_region = "ord"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  HOSTED_MODE = "true"
+  CORS_ALLOWLIST = "https://example-ui.com"
+
+[[services]]
+  internal_port = 8000
+  protocol = "tcp"
+  auto_start_machines = true
+  auto_stop_machines = true
+  min_machines_running = 1
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443

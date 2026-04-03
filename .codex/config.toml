@@ -1,0 +1,13 @@
+# Sample Codex config for hosted sf-docs-mcp usage
+model = "gpt-5.3-codex"
+
+[server]
+base_url = "https://sf-docs-mcp.example.com"
+timeout_seconds = 30
+
+[auth]
+type = "bearer"
+env_var = "SF_DOCS_MCP_TOKEN"
+
+[headers]
+x_client = "codex"
