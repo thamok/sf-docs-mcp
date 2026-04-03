@@ -1,0 +1,29 @@
+[project]
+name = "sf-docs-mcp"
+version = "0.1.0"
+description = "Persistence + hybrid retrieval services for Salesforce docs MCP"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "openai>=1.30.0",
+  "psycopg[binary]>=3.1.18",
+  "qdrant-client>=1.9.2",
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest>=8.0.0",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
