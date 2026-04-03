@@ -1,0 +1,5 @@
+[remote_mcp.salesforce_docs]
+transport = "http"
+url = "https://mcp.example.com"
+headers = { Authorization = "Bearer ${MCP_BEARER_TOKEN}" }
+timeout_seconds = 30
