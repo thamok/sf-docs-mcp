@@ -1,0 +1,12 @@
+{
+  "name": "sf-docs-mcp",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run -w @sf-docs/server build",
+    "test": "npm run -w @sf-docs/server test"
+  }
+}
