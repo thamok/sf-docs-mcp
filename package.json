@@ -1,0 +1,14 @@
+{
+  "name": "sf-docs-mcp",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run -w @sf-docs-mcp/server build && npm run -w @sf-docs-mcp/evals build",
+    "typecheck": "npm run -w @sf-docs-mcp/server typecheck && npm run -w @sf-docs-mcp/evals typecheck",
+    "test:evals": "npm run -w @sf-docs-mcp/evals run"
+  }
+}
